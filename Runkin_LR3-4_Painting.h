@@ -1,6 +1,7 @@
 #ifndef RUNKIN_LR3_4_PAINTING_H
 #define RUNKIN_LR3_4_PAINTING_H
 
+#include <algorithm>
 #include <iostream>
 #include <numeric>
 #include <string>
@@ -40,4 +41,4 @@ public:
   Painting operator+(const Painting &other) const; // Сложение
 };
 
-#endif
+#endif // RUNKIN_LR3_4_PAINTING_H

@@ -3,8 +3,8 @@
 // Конструкторы
 Painting::Painting() : title(""), author(""), year(0), auctionPrices() {}
 
-Painting::Painting(const std::string &title, const std::string &author,
-                   int year, const std::vector<double> &prices)
+Painting::Painting(const string &title, const string &author, int year,
+                   const vector<double> &prices)
     : title(title), author(author), year(year), auctionPrices(prices) {}
 
 Painting::Painting(const Painting &other)
@@ -12,8 +12,8 @@ Painting::Painting(const Painting &other)
       auctionPrices(other.auctionPrices) {}
 
 Painting::Painting(Painting &&other) noexcept
-    : title(std::move(other.title)), author(std::move(other.author)),
-      year(other.year), auctionPrices(std::move(other.auctionPrices)) {}
+    : title(move(other.title)), author(move(other.author)), year(other.year),
+      auctionPrices(move(other.auctionPrices)) {}
 
 Painting &Painting::operator=(const Painting &other) {
   if (this != &other) {
@@ -26,25 +26,25 @@ Painting &Painting::operator=(const Painting &other) {
 }
 
 // Методы get и set
-std::string Painting::getTitle() const { return title; }
-void Painting::setTitle(const std::string &title) { this->title = title; }
-std::string Painting::getAuthor() const { return author; }
-void Painting::setAuthor(const std::string &author) { this->author = author; }
+string Painting::getTitle() const { return title; }
+void Painting::setTitle(const string &title) { this->title = title; }
+string Painting::getAuthor() const { return author; }
+void Painting::setAuthor(const string &author) { this->author = author; }
 int Painting::getYear() const { return year; }
 void Painting::setYear(int year) { this->year = year; }
-std::vector<double> Painting::getAuctionPrices() const { return auctionPrices; }
-void Painting::setAuctionPrices(const std::vector<double> &prices) {
+vector<double> Painting::getAuctionPrices() const { return auctionPrices; }
+void Painting::setAuctionPrices(const vector<double> &prices) {
   auctionPrices = prices;
 }
 
 // Метод вывода информации о картине
 void Painting::display() const {
-  std::cout << "Title: " << title << ", Author: " << author
-            << ", Year: " << year << ", Auction Prices: ";
+  cout << "Title: " << title << ", Author: " << author << ", Year: " << year
+       << ", Auction Prices: ";
   for (const auto &price : auctionPrices) {
-    std::cout << price << " ";
+    cout << price << " ";
   }
-  std::cout << std::endl;
+  cout << endl;
 }
 
 // Перегруженные операции
@@ -53,16 +53,15 @@ bool Painting::operator<(const Painting &other) const {
 }
 
 bool Painting::operator>(const Painting &other) const {
-  double thisAvg =
-      std::accumulate(auctionPrices.begin(), auctionPrices.end(), 0.0) /
-      auctionPrices.size();
-  double otherAvg = std::accumulate(other.auctionPrices.begin(),
-                                    other.auctionPrices.end(), 0.0) /
-                    other.auctionPrices.size();
+  double thisAvg = accumulate(auctionPrices.begin(), auctionPrices.end(), 0.0) /
+                   auctionPrices.size();
+  double otherAvg =
+      accumulate(other.auctionPrices.begin(), other.auctionPrices.end(), 0.0) /
+      other.auctionPrices.size();
   return thisAvg > otherAvg;
 }
 
 Painting Painting::operator+(const Painting &other) const {
   return Painting(title + " & " + other.title, author + " & " + other.author,
-                  std::max(year, other.year), auctionPrices);
+                  max(year, other.year), auctionPrices);
 }
