@@ -11,10 +11,6 @@ Painting::Painting(const Painting &other)
     : title(other.title), author(other.author), year(other.year),
       auctionPrices(other.auctionPrices) {}
 
-Painting::Painting(Painting &&other) noexcept
-    : title(move(other.title)), author(move(other.author)), year(other.year),
-      auctionPrices(move(other.auctionPrices)) {}
-
 Painting &Painting::operator=(const Painting &other) {
   if (this != &other) {
     title = other.title;

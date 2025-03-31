@@ -2,10 +2,18 @@
 #define RUNKIN_LR3_4_PAINTING_H
 
 #include <algorithm>
+#include <fstream>
+#include <functional>
 #include <iostream>
+#include <map>
 #include <numeric>
+#include <queue>
+#include <set>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
+
 
 using namespace std;
 
@@ -22,7 +30,7 @@ public:
   Painting(const string &title, const string &author, int year,
            const vector<double> &prices);
   Painting(const Painting &other); // Конструктор копирования
-  Painting(Painting &&other) noexcept; // Конструктор перемещения
+  Painting(Painting &&other); // Конструктор перемещения
   Painting &operator=(const Painting &other); // Оператор присваивания
 
   string getTitle() const;
@@ -39,6 +47,7 @@ public:
   bool operator<(const Painting &other) const; // Сравнение по году создания
   bool operator>(const Painting &other) const; // Сравнение по средней цене
   Painting operator+(const Painting &other) const; // Сложение
+  function<void()> EnterNumber(int &varLink, string label);
 };
 
 #endif // RUNKIN_LR3_4_PAINTING_H
