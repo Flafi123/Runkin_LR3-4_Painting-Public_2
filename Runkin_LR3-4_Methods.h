@@ -37,7 +37,7 @@ function<void()> EnterNumber(int &varLink, string label) {
 void loadFile(const string &fileName, vector<Painting> &paintings) {
   ifstream inFile(fileName);
   if (!inFile) {
-    cout << "Ошибка открытия файла: " << fileName << endl;
+    cout << "Error opening file: " << fileName << endl;
     return;
   }
 
@@ -58,7 +58,7 @@ void loadFile(const string &fileName, vector<Painting> &paintings) {
   }
 
   inFile.close();
-  cout << "Файл загружен успешно!" << endl;
+  cout << "File loaded successfully!" << endl;
 }
 
 bool isValidYear(int year) {
@@ -67,7 +67,7 @@ bool isValidYear(int year) {
   return year > i;
 }
 
-// bool isValidPrice(double price) { return price >= 0; }
+bool isValidPrice(double price) { return price >= 0; }
 
 void displayAllPaintings() {
   for (const auto &painting : paintings) {

@@ -12,8 +12,8 @@ struct MenuItem {
 int main() {
   // Инициализация меню
   map<int, MenuItem> menu = {
-      {1, {"Add Painting", addPainting}},
-      {2, {"Display All Paintings", getSortedByYear}},
+      {1, {"Display", displayAllPaintings}},
+      {2, {"Sorted", getSortedByYear}},
       {3,
        {"Load Paintings from File",
         []() {

@@ -40,6 +40,10 @@ private:
 
 public:
   // Конструкторы
+  void addPainting(const Painting &painting);
+
+  // Метод для отображения всех картин
+  void displayAllPaintings() const;
   Painting(); // Конструктор по умолчанию
   Painting(const string &title, const string &author, int year,
            const vector<double> &prices);
