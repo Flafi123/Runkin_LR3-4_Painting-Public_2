@@ -11,12 +11,32 @@ Painting::Painting(const Painting &other)
     : title(other.title), author(other.author), year(other.year),
       auctionPrices(other.auctionPrices) {}
 
+// Конструктор перемещения
+Painting::Painting(Painting &&other) noexcept
+    : title(move(other.title)), author(move(other.author)), year(other.year),
+      auctionPrices(move(other.auctionPrices)) {
+  other.year = 0; // Обнуляем перемещаемый объект
+}
+
+// Оператор присваивания
 Painting &Painting::operator=(const Painting &other) {
   if (this != &other) {
     title = other.title;
     author = other.author;
     year = other.year;
     auctionPrices = other.auctionPrices;
+  }
+  return *this;
+}
+
+// Оператор перемещения
+Painting &Painting::operator=(Painting &&other) noexcept {
+  if (this != &other) {
+    title = move(other.title);
+    author = move(other.author);
+    year = other.year;
+    auctionPrices = move(other.auctionPrices);
+    other.year = 0; // Обнуляем перемещаемый объект
   }
   return *this;
 }
@@ -49,11 +69,16 @@ bool Painting::operator<(const Painting &other) const {
 }
 
 bool Painting::operator>(const Painting &other) const {
-  double thisAvg = accumulate(auctionPrices.begin(), auctionPrices.end(), 0.0) /
-                   auctionPrices.size();
-  double otherAvg =
-      accumulate(other.auctionPrices.begin(), other.auctionPrices.end(), 0.0) /
-      other.auctionPrices.size();
+  double thisAvg =
+      auctionPrices.empty()
+          ? 0
+          : accumulate(auctionPrices.begin(), auctionPrices.end(), 0.0) /
+                auctionPrices.size();
+  double otherAvg = other.auctionPrices.empty()
+                        ? 0
+                        : accumulate(other.auctionPrices.begin(),
+                                     other.auctionPrices.end(), 0.0) /
+                              other.auctionPrices.size();
   return thisAvg > otherAvg;
 }
 

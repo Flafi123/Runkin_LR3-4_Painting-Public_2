@@ -1,9 +1,6 @@
 #include "RUNKIN_LR3-4_Methods.h"
 #include "RUNKIN_LR3-4_Painting.h"
 #include "Runkin_LR3-4_Painting.cpp"
-#include <functional>
-#include <iostream>
-#include <map>
 
 using namespace std;
 
