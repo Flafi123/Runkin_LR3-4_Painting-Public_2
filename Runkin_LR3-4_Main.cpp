@@ -1,53 +1,51 @@
-#include "RUNKIN_LR3-4_Methods.h"
-#include "RUNKIN_LR3-4_Painting.h"
 #include "Runkin_LR3-4_Painting.cpp"
+#include <ctime>
 
 using namespace std;
-
-struct MenuItem {
-  string title;
-  function<void()> action;
-};
-
 int main() {
-  // Инициализация меню
+  // генерация начального случайного значения
+  srand(time(NULL));
+
+  // Создание меню с использованием std::map
   map<int, MenuItem> menu = {
-      {1, {"Display", displayAllPaintings}},
-      {2, {"Sorted", getSortedByYear}},
-      {3,
-       {"Load Paintings from File",
-        []() {
-          loadFile("Painting.txt", paintings); // Вызов функции загрузки
-        }}},
+      // {1, {"Create Polynom Constructor default", createPolDefault}},
+      // {2, {"Create Polynom Constructor with degree", createPolDeg}},
+      // {3, {"Create Polynom Constructor with degree & coefficients",
+      // createPolDegCoeff}},
+      // {4, {"Create Polynom with consol", createPolCons}},
+      // {5, {"Show array of Polynom", showArrayPol (vectorOfAllPolynoms)}},
+      // {6, {"Calculate value of Polynom", calcvalPol}},
+      // {7, {"Add of Polynoms", addPolynoms}},
+      // {8, {"Sum of array the Polynoms", sumArrPolynoms}}
   };
-
-  int choice = 0;
-
-  // Отображение меню
-  cout << "Menu:" << endl;
+  unsigned choice = 0; // Переменная для хранения выбора пользователя
+                       // Основной цикл программы
+                       // while (true) {
+  std::cout << "Меню: " << std::endl;
+  // Вывод всех пунктов меню
   for (const auto &item : menu) {
-    cout << item.first << ". " << item.second.title << endl;
+    std::cout << "Task " << item.first << ". " << item.second.title
+              << std::endl;
   }
-
-  cout << "0. Exit" << endl;
+  std::cout << "0. Выход" << std::endl; // Пункт для выхода из программы
 
   while (true) {
-    EnterNumber(choice, "Enter your choice: ")();
+    EnterNumber(choice, "Введите номер пункта: ")();
+    // Выход из программы, если выбран пункт 0
     if (choice == 0) {
-      cout << "Goodbye!" << endl;
+      std::cout << "© 2025 FirstName LastName" << std::endl;
       break;
     }
+    cout << endl << "=========Action:===========" << endl;
 
-    cout << endl;
-
+    // Проверка, существует ли выбранный пункт меню
     if (menu.find(choice) != menu.end()) {
-      menu[choice].action();
+      menu[choice].action(); // Выполнение действия, связанного с пунктом меню
     } else {
-      cout << "Invalid choice." << endl;
-    }
 
-    cout << endl << endl;
+      std::cout << "Некорректный ввод.";
+    } // Сообщение об ошибке, если пункт не найден
+    std::cout << std::endl; // Отступ для красоты
   }
-
-  return 0;
+  return 0; // Завершение программы
 }
