@@ -1,39 +1,61 @@
+#include "Runkin_LR3-4_Methods.cpp"
+// #include "Runkin_LR3-4_Methods.h"
 #include "Runkin_LR3-4_Painting.cpp"
 #include <ctime>
+#include <functional>
+#include <iostream>
+#include <map>
 
 using namespace std;
+
+// Структура для элемента меню
+struct MenuItem {
+  string title;
+  function<void()> action;
+};
+
+// Функция для ввода номера с контролем корректности
+int EnterNumber(unsigned &choice, const string &prompt) {
+  cout << prompt;
+  cin >> choice;
+  return choice;
+}
+
 int main() {
-  // генерация начального случайного значения
-  srand(time(NULL));
+  // Генерация начального случайного значения
+  srand(static_cast<unsigned>(time(NULL)));
 
   // Создание меню с использованием std::map
   map<int, MenuItem> menu = {
-      // {1, {"Create Polynom Constructor default", createPolDefault}},
-      // {2, {"Create Polynom Constructor with degree", createPolDeg}},
-      // {3, {"Create Polynom Constructor with degree & coefficients",
-      // createPolDegCoeff}},
-      // {4, {"Create Polynom with consol", createPolCons}},
-      // {5, {"Show array of Polynom", showArrayPol (vectorOfAllPolynoms)}},
-      // {6, {"Calculate value of Polynom", calcvalPol}},
-      // {7, {"Add of Polynoms", addPolynoms}},
-      // {8, {"Sum of array the Polynoms", sumArrPolynoms}}
+      {1,
+       {"Create a painting",
+        []() {
+          string title = inputTitle();
+          string author = inputAuthor();
+          int year = inputYear();
+          vector<double> prices = inputAuctionPrices();
+          paintings.push_back(Painting(title, author, year, prices));
+        }}},
+      {2, {"Display all paintings", displayAllPaintings}},
+      {3, {"Demonstrate constructors", demonstrateConstructors}},
+      {4, {"Demonstrate methods", demonstrateMethods}},
+      {5, {"Sort paintings by year creation", sortPaintingsByYearCreation}},
   };
+
   unsigned choice = 0; // Переменная для хранения выбора пользователя
-                       // Основной цикл программы
-                       // while (true) {
-  std::cout << "Меню: " << std::endl;
+
+  cout << "Menu: " << endl;
   // Вывод всех пунктов меню
   for (const auto &item : menu) {
-    std::cout << "Task " << item.first << ". " << item.second.title
-              << std::endl;
+    cout << "Task " << item.first << ". " << item.second.title << endl;
   }
-  std::cout << "0. Выход" << std::endl; // Пункт для выхода из программы
+  cout << "0. Exit" << endl; // Пункт для выхода из программы
 
   while (true) {
-    EnterNumber(choice, "Введите номер пункта: ")();
+    EnterNumber(choice, "Enter the task number: ");
     // Выход из программы, если выбран пункт 0
     if (choice == 0) {
-      std::cout << "© 2025 FirstName LastName" << std::endl;
+      cout << " 2025 Your Name" << endl;
       break;
     }
     cout << endl << "=========Action:===========" << endl;
@@ -42,10 +64,10 @@ int main() {
     if (menu.find(choice) != menu.end()) {
       menu[choice].action(); // Выполнение действия, связанного с пунктом меню
     } else {
-
-      std::cout << "Некорректный ввод.";
-    } // Сообщение об ошибке, если пункт не найден
-    std::cout << std::endl; // Отступ для красоты
+      cout << "Incorrect input."
+           << endl; // Сообщение об ошибке, если пункт не найден
+    }
+    cout << endl; // Отступ для красоты
   }
   return 0; // Завершение программы
 }
