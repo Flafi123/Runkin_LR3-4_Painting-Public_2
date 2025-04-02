@@ -1,77 +1,48 @@
-#ifndef RUNKIN_LR3_4_PAINTING_H
-#define RUNKIN_LR3_4_PAINTING_H
-
-#include <algorithm>
-#include <array>
-#include <chrono>
-#include <cmath>
-#include <ctime>
-#include <deque>
-#include <fstream>
-#include <functional>
-#include <iomanip>
+#ifndef _POLYNOM_H // Защита от повторного включения
+#define _POLYNOM_H
 #include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <numeric>
-#include <optional>
-#include <queue>
-#include <random>
-#include <set>
-#include <sstream>
-#include <stack>
 #include <string>
-#include <thread>
-#include <tuple>
-#include <unordered_map>
-#include <unordered_set>
-#include <variant>
 #include <vector>
-
 using namespace std;
-
-class Painting {
-private:
-  string title;
-  string author;
-  int year;
-  vector<double> auctionPrices;
-
+class Polynom {
+  unsigned deg{0};     // степень полинома
+  vector<double> koef; // массив коэффициентов
 public:
-  // Конструкторы
-  void addPainting(const Painting &painting);
-
-  // Метод для отображения всех картин
-  void displayAllPaintings() const;
-  Painting(); // Конструктор по умолчанию
-  Painting(const string &title, const string &author, int year,
-           const vector<double> &prices);
-  Painting(const Painting &other); // Конструктор копирования
-  Painting(Painting &&other) noexcept; // Конструктор перемещения (с noexcept)
-
-  // Операторы
-  Painting &operator=(const Painting &other); // Оператор присваивания
-  Painting &
-  operator=(Painting &&other) noexcept; // Оператор перемещения (с noexcept)
-
-  // Методы get и set
-  string getTitle() const;
-  void setTitle(const string &title);
-  string getAuthor() const;
-  void setAuthor(const string &author);
-  int getYear() const;
-  void setYear(int year);
-  vector<double> getAuctionPrices() const;
-  void setAuctionPrices(const vector<double> &prices);
-
-  // Метод вывода информации о картине
-  void display() const;
-
-  // Перегруженные операции
-  bool operator<(const Painting &other) const;
-  bool operator>(const Painting &other) const;
-  Painting operator+(const Painting &other) const;
+  // конструкторы
+  Polynom(); // конструктор
+  // параметризованный конструктор со случайными коэффициентами
+  Polynom(unsigned k);
+  // параметризованный конструктор с заданным массивом коэффициентов
+  Polynom(unsigned k, vector<double> mas);
+  Polynom(const Polynom &ob); // конструктор копирования
+  ~Polynom()                  // деструктор
+  {}
+  // set-методы
+  void setPolynom(unsigned k, const vector<double> &mas) {
+    if (k <= mas.size()) {
+      deg = k;
+      koef.resize(k);
+      koef.assign(mas.begin(), mas.begin() + k);
+    } else {
+      cerr << "Error: Degree exceeds coefficients count." << endl;
+    }
+  };
+  void setDegree(unsigned k) { deg = k; }; // установить степень
+  // get-методы
+  unsigned getDegree() const { return deg; }; // получить степень
+  const vector<double> getKoef() const { return koef; }
+  void CalculateValue(double x); // вычисление значения полинома для заданного х
+  // перегрузка операторов
+  Polynom operator+(const Polynom &other) const;
+  const Polynom &operator=(const Polynom &other) {
+    // не присваиваем объект самому себе
+    if (&other == this)
+      return *this;
+    deg = other.deg;
+    koef = other.koef;
+    return *this;
+  }
+  friend ostream &operator<<(ostream &mystream, const Polynom &obj);
+  friend istream &operator>>(istream &mystream, Polynom &obj);
 };
-
-#endif // RUNKIN_LR3_4_PAINTING_H
+#endif // _POLYNOM_H
