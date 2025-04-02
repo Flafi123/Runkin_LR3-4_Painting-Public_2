@@ -1,48 +1,54 @@
-#ifndef _POLYNOM_H // Защита от повторного включения
-#define _POLYNOM_H
+#ifndef _PAINTING_H // Защита от повторного включения
+#define _PAINTING_H
+
+#include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
-using namespace std;
-class Polynom {
-  unsigned deg{0};     // степень полинома
-  vector<double> koef; // массив коэффициентов
+
+class Painting {
+private:
+  std::string title;  // Название картины
+  std::string author; // Автор картины
+  int year;           // Год создания
+  std::vector<double> auctionPrices; // Список предложений цены на аукционе
+
 public:
-  // конструкторы
-  Polynom(); // конструктор
-  // параметризованный конструктор со случайными коэффициентами
-  Polynom(unsigned k);
-  // параметризованный конструктор с заданным массивом коэффициентов
-  Polynom(unsigned k, vector<double> mas);
-  Polynom(const Polynom &ob); // конструктор копирования
-  ~Polynom()                  // деструктор
-  {}
-  // set-методы
-  void setPolynom(unsigned k, const vector<double> &mas) {
-    if (k <= mas.size()) {
-      deg = k;
-      koef.resize(k);
-      koef.assign(mas.begin(), mas.begin() + k);
-    } else {
-      cerr << "Error: Degree exceeds coefficients count." << endl;
-    }
-  };
-  void setDegree(unsigned k) { deg = k; }; // установить степень
-  // get-методы
-  unsigned getDegree() const { return deg; }; // получить степень
-  const vector<double> getKoef() const { return koef; }
-  void CalculateValue(double x); // вычисление значения полинома для заданного х
-  // перегрузка операторов
-  Polynom operator+(const Polynom &other) const;
-  const Polynom &operator=(const Polynom &other) {
-    // не присваиваем объект самому себе
-    if (&other == this)
-      return *this;
-    deg = other.deg;
-    koef = other.koef;
-    return *this;
-  }
-  friend ostream &operator<<(ostream &mystream, const Polynom &obj);
-  friend istream &operator>>(istream &mystream, Polynom &obj);
+  // Конструкторы
+  Painting(); // Конструктор по умолчанию
+  // Painting &operator=(Painting &&) = delete;
+  Painting(const std::string &title, int year,
+           const std::vector<double> &prices)
+      : Painting(title, "", year, prices) {} // Делегирующий конструктор
+  Painting(const std::string &title, const std::string &author, int year,
+           const std::vector<double> &prices); // Параметризованный конструктор
+  Painting(const Painting &other); // Конструктор копирования
+  Painting(Painting &&other) noexcept; // Конструктор перемещения
+  Painting &operator=(const Painting &other); // Оператор присваивания
+  ~Painting();                                // Деструктор
+
+  // Методы get и set
+  std::string getTitle() const;
+  void setTitle(const std::string &title);
+  std::string getAuthor() const;
+  void setAuthor(const std::string &author);
+  int getYear() const;
+  void setYear(int year);
+  std::vector<double> getAuctionPrices() const;
+  void setAuctionPrices(const std::vector<double> &prices);
+
+  // Метод вывода информации о картине
+  void display() const;
+
+  // Перегруженные операции
+  bool operator<(const Painting &other) const; // Сравнение по году создания
+  double averagePrice() const; // Средняя цена
+  bool operator>(const Painting &other) const; // Сравнение по средней цене
+  Painting operator+(const Painting &other) const; // Сложение
+  Painting &operator++();   // Префиксный инкремент
+  Painting operator++(int); // Постфиксный инкремент
+  Painting &operator&=(const Painting &other); // Оператор присваивания
 };
-#endif // _POLYNOM_H
+
+#endif // _PAINTING_H
