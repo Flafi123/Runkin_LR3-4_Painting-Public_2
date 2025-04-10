@@ -49,6 +49,34 @@ public:
   Painting &operator++();   // Префиксный инкремент
   Painting operator++(int); // Постфиксный инкремент
   Painting &operator&=(const Painting &other); // Оператор присваивания
+  // Перегруженные операции ввода и вывода
+  friend std::ostream &operator<<(std::ostream &os, const Painting &painting) {
+    os << "Title: " << painting.title << ", Author: " << painting.author
+       << ", Year: " << painting.year << ", Auction Prices: ";
+    for (const auto &price : painting.auctionPrices) {
+      os << price << " ";
+    }
+    return os;
+  }
+
+  friend std::istream &operator>>(std::istream &is, Painting &painting) {
+    std::cout << "Enter title: ";
+    is >> std::ws; // Пропуск пробелов перед вводом
+    std::getline(is, painting.title);
+    std::cout << "Enter author: ";
+    std::getline(is, painting.author);
+    std::cout << "Enter year: ";
+    is >> painting.year;
+    std::cout << "Enter number of auction prices: ";
+    size_t count;
+    is >> count;
+    painting.auctionPrices.resize(count);
+    for (size_t i = 0; i < count; ++i) {
+      std::cout << "Enter price " << i + 1 << ": ";
+      is >> painting.auctionPrices[i];
+    }
+    return is;
+  }
 };
 
 #endif // _PAINTING_H

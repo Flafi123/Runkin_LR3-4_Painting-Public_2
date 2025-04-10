@@ -13,10 +13,12 @@ bool isValidYear(int year);
 bool isValidPrice(double price);
 
 // Функции ввода данных с контролем корректности
-std::string inputTitle();
-std::string inputAuthor();
-int inputYear();
-std::vector<double> inputAuctionPrices();
+// std::string inputTitle();
+// std::string inputAuthor();
+// int inputYear();
+// std::vector<double> inputAuctionPrices();
+
+void inputPainting();
 
 // Функция для отображения всех объектов класса
 void displayAllPaintings();

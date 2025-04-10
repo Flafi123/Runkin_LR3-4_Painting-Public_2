@@ -18,51 +18,58 @@ bool isValidPrice(double price) {
   return price >= 0; // Цена не должна быть отрицательной
 }
 
+// Функция ввода картины
+void inputPainting() {
+  Painting p;
+  cin >> p;
+  paintings.push_back(p);
+}
+
 // Функция ввода названия картины
-std::string inputTitle() {
-  std::string title;
-  cout << "Enter the title of the painting: ";
-  cin.ignore(); // Игнорируем предыдущие символы новой строки
-  getline(cin, title);
-  return title;
-}
+// string inputTitle() {
+//   std::string title;
+//   cout << "Enter the title of the painting: ";
+//   cin.ignore(); // Игнорируем предыдущие символы новой строки
+//   getline(cin, title);
+//   return title;
+// }
 
-// Функция ввода автора картины
-std::string inputAuthor() {
-  std::string author;
-  cout << "Enter the author of the painting: ";
-  cin.ignore(); // Игнорируем предыдущие символы новой строки
-  getline(cin, author);
-  return author;
-}
+// // Функция ввода автора картины
+// string inputAuthor() {
+//   std::string author;
+//   cout << "Enter the author of the painting: ";
+//   cin.ignore(); // Игнорируем предыдущие символы новой строки
+//   getline(cin, author);
+//   return author;
+// }
 
-// Функция ввода года создания картины с контролем корректности
-int inputYear() {
-  int year;
-  do {
-    cout << "Enter the year of the painting's creation (positive integer): ";
-    cin >> year;
-  } while (!isValidYear(year));
-  return year;
-}
+// // Функция ввода года создания картины с контролем корректности
+// int inputYear() {
+//   int year;
+//   do {
+//     cout << "Enter the year of the painting's creation (positive integer): ";
+//     cin >> year;
+//   } while (!isValidYear(year));
+//   return year;
+// }
 
-// Функция ввода списка цен на аукционе
-std::vector<double> inputAuctionPrices() {
-  std::vector<double> prices;
-  int count;
-  cout << "Enter the number of prices on the auction: ";
-  cin >> count;
+// // Функция ввода списка цен на аукционе
+// vector<double> inputAuctionPrices() {
+//   std::vector<double> prices;
+//   int count;
+//   cout << "Enter the number of prices on the auction: ";
+//   cin >> count;
 
-  for (int i = 0; i < count; ++i) {
-    double price;
-    do {
-      cout << "Enter price " << (i + 1) << ": ";
-      cin >> price;
-    } while (!isValidPrice(price));
-    prices.push_back(price);
-  }
-  return prices;
-}
+//   for (int i = 0; i < count; ++i) {
+//     double price;
+//     do {
+//       cout << "Enter price " << (i + 1) << ": ";
+//       cin >> price;
+//     } while (!isValidPrice(price));
+//     prices.push_back(price);
+//   }
+//   return prices;
+// }
 
 // Функция для отображения всех объектов класса
 void displayAllPaintings() {
@@ -71,7 +78,7 @@ void displayAllPaintings() {
     return;
   }
   for (const auto &painting : paintings) {
-    painting.display(); // Используем метод display класса Painting
+    cout << painting << endl; // Используем перегруженную операцию вывода
   }
 }
 
@@ -124,7 +131,7 @@ void demonstrateMethods() {
     cout << p1.getTitle() << " and " << p2.getTitle()
          << " are from the same year" << endl;
   }
-  cout << "Comparing paintings by average price: " << endl;
+  cout << endl << "Comparing paintings by average price: " << endl;
 
   // Сравнение по средней цене
   if (p2 > p3) {
@@ -153,6 +160,11 @@ void demonstrateMethods() {
   // Префиксный инкремент
   Painting p7 = ++p6;
   cout << p7.getYear() << " is the same as " << p6.getYear() << endl;
+
+  cout << endl << "averagePrice:" << endl;
+  // Средняя цена
+  Painting p8 = paintings[0];
+  cout << p8.averagePrice() << endl;
 
   // НЕРАБОТАЕТ Я ХЗ
   // cout << endl << endl << "Assignment:" << endl;

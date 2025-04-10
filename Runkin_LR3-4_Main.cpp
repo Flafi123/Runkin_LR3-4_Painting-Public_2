@@ -27,15 +27,7 @@ int main() {
 
   // Создание меню с использованием std::map
   map<int, MenuItem> menu = {
-      {1,
-       {"Create a painting",
-        []() {
-          string title = inputTitle();
-          string author = inputAuthor();
-          int year = inputYear();
-          vector<double> prices = inputAuctionPrices();
-          paintings.push_back(Painting(title, author, year, prices));
-        }}},
+      {1, {"Create a painting", []() { inputPainting(); }}},
       {2, {"Display all paintings", displayAllPaintings}},
       {3, {"Demonstrate constructors", demonstrateConstructors}},
       {4, {"Demonstrate methods", demonstrateMethods}},
