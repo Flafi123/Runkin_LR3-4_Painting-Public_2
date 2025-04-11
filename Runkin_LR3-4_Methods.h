@@ -12,12 +12,6 @@ extern std::vector<Painting> paintings;
 bool isValidYear(int year);
 bool isValidPrice(double price);
 
-// Функции ввода данных с контролем корректности
-// std::string inputTitle();
-// std::string inputAuthor();
-// int inputYear();
-// std::vector<double> inputAuctionPrices();
-
 void inputPainting();
 
 // Функция для отображения всех объектов класса
@@ -25,6 +19,10 @@ void displayAllPaintings();
 
 // Функция для демонстрации функциональности всех конструкторов
 void demonstrateConstructors();
+
+void EnterNumber(int &varLink, const string &label);
+
+void EnterString(string &varLink, const string &label);
 
 // Функция для демонстрации функциональности всех методов класса
 void demonstrateMethods();

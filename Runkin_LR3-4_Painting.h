@@ -1,42 +1,57 @@
 #ifndef _PAINTING_H // Защита от повторного включения
 #define _PAINTING_H
-
+// #include "Runkin_LR3-4_Methods.h"
+// #include "Runkin_LR3-4_Methods.cpp"
+// #include "Runkin_LR3-4_Painting.cpp"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
 #include <string>
 #include <vector>
+using namespace std;
 
 class Painting {
 private:
-  std::string title;  // Название картины
-  std::string author; // Автор картины
-  int year;           // Год создания
-  std::vector<double> auctionPrices; // Список предложений цены на аукционе
+  string title;  // Название картины
+  string author; // Автор картины
+  int year;      // Год создания
+  vector<double> auctionPrices; // Список предложений цены на аукционе
 
 public:
   // Конструкторы
   Painting(); // Конструктор по умолчанию
   // Painting &operator=(Painting &&) = delete;
-  Painting(const std::string &title, int year,
-           const std::vector<double> &prices)
+  Painting(const string &title, int year, const vector<double> &prices)
       : Painting(title, "", year, prices) {} // Делегирующий конструктор
-  Painting(const std::string &title, const std::string &author, int year,
-           const std::vector<double> &prices); // Параметризованный конструктор
+  Painting(const string &title, const string &author, int year,
+           const vector<double> &prices); // Параметризованный конструктор
   Painting(const Painting &other); // Конструктор копирования
   Painting(Painting &&other) noexcept; // Конструктор перемещения
+
+  //
+
+  //
+
+  // Конструктор преобразования
+  Painting(const string &t)
+      : title(t), author("Anonim"), year(0), auctionPrices(0) {}
+
+  //
+
+  //
+
   Painting &operator=(const Painting &other); // Оператор присваивания
   ~Painting();                                // Деструктор
 
   // Методы get и set
-  std::string getTitle() const;
-  void setTitle(const std::string &title);
-  std::string getAuthor() const;
-  void setAuthor(const std::string &author);
+  string getTitle() const;
+  void setTitle(const string &title);
+  string getAuthor() const;
+  void setAuthor(const string &author);
   int getYear() const;
   void setYear(int year);
-  std::vector<double> getAuctionPrices() const;
-  void setAuctionPrices(const std::vector<double> &prices);
+  vector<double> getAuctionPrices() const;
+  void setAuctionPrices(const vector<double> &prices);
 
   // Метод вывода информации о картине
   void display() const;
@@ -46,37 +61,13 @@ public:
   double averagePrice() const; // Средняя цена
   bool operator>(const Painting &other) const; // Сравнение по средней цене
   Painting operator+(const Painting &other) const; // Сложение
+  // Painting operator+(int additionalYear) const;
   Painting &operator++();   // Префиксный инкремент
   Painting operator++(int); // Постфиксный инкремент
   Painting &operator&=(const Painting &other); // Оператор присваивания
   // Перегруженные операции ввода и вывода
-  friend std::ostream &operator<<(std::ostream &os, const Painting &painting) {
-    os << "Title: " << painting.title << ", Author: " << painting.author
-       << ", Year: " << painting.year << ", Auction Prices: ";
-    for (const auto &price : painting.auctionPrices) {
-      os << price << " ";
-    }
-    return os;
-  }
-
-  friend std::istream &operator>>(std::istream &is, Painting &painting) {
-    std::cout << "Enter title: ";
-    is >> std::ws; // Пропуск пробелов перед вводом
-    std::getline(is, painting.title);
-    std::cout << "Enter author: ";
-    std::getline(is, painting.author);
-    std::cout << "Enter year: ";
-    is >> painting.year;
-    std::cout << "Enter number of auction prices: ";
-    size_t count;
-    is >> count;
-    painting.auctionPrices.resize(count);
-    for (size_t i = 0; i < count; ++i) {
-      std::cout << "Enter price " << i + 1 << ": ";
-      is >> painting.auctionPrices[i];
-    }
-    return is;
-  }
+  friend ostream &operator<<(ostream &os, const Painting &painting);
+  friend istream &operator>>(istream &is, Painting &painting);
 };
 
 #endif // _PAINTING_H

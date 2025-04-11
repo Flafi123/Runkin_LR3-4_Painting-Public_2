@@ -1,4 +1,6 @@
 #include "Runkin_LR3-4_Painting.h"
+// #include "Runkin_LR3-4_Methods.cpp"
+#include "Runkin_LR3-4_Methods.h"
 #include <iostream>
 #include <numeric>
 
@@ -60,7 +62,7 @@ void Painting::display() const {
 
 // Перегруженные операции
 bool Painting::operator<(const Painting &other) const {
-  return year < other.year; // Сравнение по году создания
+  return year > other.year; // Сравнение по году создания
 }
 
 double Painting::averagePrice() const {
@@ -75,13 +77,22 @@ bool Painting::operator>(const Painting &other) const {
 }
 
 Painting Painting::operator+(const Painting &other) const {
-  // Создаем новый объект Painting с объединением информации
+  // Создаем новый объект Painting с суммой параметров
   std::vector<double> combinedPrices = auctionPrices;
   combinedPrices.insert(combinedPrices.end(), other.auctionPrices.begin(),
                         other.auctionPrices.end());
-  return Painting(title + " & " + other.title, author,
-                  std::max(year, other.year), combinedPrices);
+  return Painting(title + " & " + other.title, author + " & " + other.author,
+                  year + other.year, combinedPrices);
 }
+// Painting Painting::operator+(int additionalYear) const {
+//   // Создаем новый объект Painting с увеличенным годом
+//   Painting result;
+//   result.title = title;
+//   result.author = author;
+//   result.year = year + additionalYear;
+//   result.auctionPrices = auctionPrices;
+//   return result;
+// }
 
 Painting &Painting::operator++() {
   // Префиксный инкремент: увеличиваем год на 1
@@ -105,4 +116,32 @@ Painting &Painting::operator&=(const Painting &other) {
     auctionPrices = other.auctionPrices;
   }
   return *this;
+}
+// Перегруженный оператор ввода
+std::istream &operator>>(std::istream &is, Painting &painting) {
+
+  cin.ignore();
+
+  EnterString(painting.title, "Enter title: ");
+  EnterString(painting.author, "Enter author: ");
+  EnterNumber(painting.year, "Enter year: ");
+  int count1;
+  EnterNumber(count1, "Enter number of auction prices: ");
+  std::size_t count = count1;
+  painting.auctionPrices.resize(count);
+  for (std::size_t i = 0; i < count; ++i) {
+    int price;
+    EnterNumber(price, "Enter price " + std::to_string(i + 1) + ": ");
+    painting.auctionPrices[i] = price;
+  }
+  return is;
+}
+
+std::ostream &operator<<(ostream &os, const Painting &painting) {
+  os << "Title: " << painting.title << ", Author: " << painting.author
+     << ", Year: " << painting.year << ", Auction Prices: ";
+  for (const auto &price : painting.auctionPrices) {
+    os << price << " ";
+  }
+  return os;
 }

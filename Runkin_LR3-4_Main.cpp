@@ -1,5 +1,5 @@
 #include "Runkin_LR3-4_Methods.cpp"
-// #include "Runkin_LR3-4_Methods.h"
+#include "Runkin_LR3-4_Methods.h"
 #include "Runkin_LR3-4_Painting.cpp"
 #include <ctime>
 #include <functional>
@@ -14,13 +14,6 @@ struct MenuItem {
   function<void()> action;
 };
 
-// Функция для ввода номера с контролем корректности
-int EnterNumber(unsigned &choice, const string &prompt) {
-  cout << prompt;
-  cin >> choice;
-  return choice;
-}
-
 int main() {
   // Генерация начального случайного значения
   srand(static_cast<unsigned>(time(NULL)));
@@ -34,7 +27,7 @@ int main() {
       {5, {"Sort paintings by year creation", sortPaintingsByYearCreation}},
   };
 
-  unsigned choice = 0; // Переменная для хранения выбора пользователя
+  int choice = 0; // Переменная для хранения выбора пользователя
 
   cout << "Menu: " << endl;
   // Вывод всех пунктов меню
